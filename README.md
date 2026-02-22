@@ -19,55 +19,69 @@ If you are developing a production application, we recommend updating the config
 export default defineConfig([
   globalIgnores(['dist']),
   {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+    # React + TypeScript + Vite — Project
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    A responsive single-page React application built with Vite and TypeScript. The app is organized into reusable UI components and content sections (Hero, About, Projects, Skills, Education, Contact, etc.). This README documents how the project works, how it is implemented, and how to run it locally or build for deployment.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    **Working**
+    - **Single-page layout:** navigation-driven sections rendered from `src/sections`.
+    - **Reusable UI components:** primitives and styled components live in `src/components/ui`.
+    - **Interactive elements:** animations, carousels, charts, and forms using libraries included in `package.json`.
+    - **Responsive & accessible:** designed for desktop and mobile with accessibility-minded primitives.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+    **Implementation**
+    - **Stack:** React 19, TypeScript, Vite, Tailwind CSS, Radix UI primitives and a small custom UI layer under `src/components/ui`.
+    - **Key folders:**
+      - `src/components/ui` — reusable UI building blocks
+      - `src/sections` — page sections (Hero, About, Projects, Skills, Education, Contact, Footer, Navigation)
+      - `src/hooks` — custom hooks (e.g., `use-mobile`)
+      - `src/lib` — utilities
+    - **Notable libraries:** `framer-motion` (animations), `recharts` (charts), `embla-carousel-react` (carousels), `react-hook-form` (forms), `sonner` (notifications), `radix-ui` primitives for accessible UI.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+    **Usage / How to run**
+    1. Clone the repository and open the project folder.
+    2. Install dependencies:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    ```bash
+    npm install
+    ```
+
+    3. Run development server with hot reload:
+
+    ```bash
+    npm run dev
+    ```
+
+    4. Create a production build:
+
+    ```bash
+    npm run build
+    ```
+
+    5. Preview the production build locally:
+
+    ```bash
+    npm run preview
+    ```
+
+    6. Run linters:
+
+    ```bash
+    npm run lint
+    ```
+
+    Notes:
+    - Node.js 18+ is recommended but recent LTS versions should work.
+    - Environment-specific variables (if any) can be added to a `.env` file at the project root.
+
+    **Deployment**
+    - The `build` output (Vite) can be deployed to static hosts like Vercel, Netlify, or GitHub Pages. For most platforms, connect the repository and use the default build command `npm run build`.
+
+    **Contributing**
+    - This README focuses on workings and usage only. If you want contribution guidelines, tests, or CI added, open an issue or add a `CONTRIBUTING.md`.
+
+    **License**
+    - Add a `LICENSE` file to declare the repository license if needed.
+
+    ---
+    *This README contains implementation, usage, and run instructions only; no personal information is included.*

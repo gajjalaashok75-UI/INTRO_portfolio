@@ -1,6 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { animate, createScope } from 'animejs';
+import LiveClock from '../components/LiveClock';
+
+type Scope = ReturnType<typeof createScope>;
 
 const navLinks = [
   { name: 'Home', href: '#home' },
@@ -14,6 +18,8 @@ const navLinks = [
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navRootRef = useRef<HTMLElement | null>(null);
+  const navScopeRef = useRef<Scope | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +27,23 @@ export default function Navigation() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Anime.js: logo playful ping, scoped to the header for auto cleanup
+  useEffect(() => {
+    const root = navRootRef.current;
+    if (!root) return;
+    navScopeRef.current = createScope({ root }).add((self) => {
+      self.add('pingLogo', () => {
+        animate('.gakr-logo', {
+          rotate: [0, -6, 6, 0],
+          scale: [1, 1.08, 1],
+          duration: 550,
+          ease: 'out(3)',
+        });
+      });
+    });
+    return () => navScopeRef.current?.revert();
   }, []);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -41,6 +64,7 @@ export default function Navigation() {
   return (
     <>
       <motion.header
+        ref={navRootRef}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -51,25 +75,31 @@ export default function Navigation() {
         }`}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-[72px]">
+          <div className="grid grid-cols-[auto_1fr_auto] sm:grid-cols-3 items-center h-[72px] gap-2">
             {/* Logo */}
             <motion.a
               href="#home"
               onClick={(e) => handleLinkClick(e, '#home')}
-              className="text-xl font-bold text-white tracking-tight"
+              onMouseEnter={() => navScopeRef.current?.methods.pingLogo?.()}
+              className="gakr-logo justify-self-start text-xl font-bold text-white tracking-tight"
               whileHover={{ scale: 1.02 }}
             >
               <span className="text-primary">GA</span>KR
             </motion.a>
 
+            {/* Live Clock — always visually centered */}
+            <div className="justify-self-center">
+              <LiveClock />
+            </div>
+
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-1 justify-self-end">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
-                  className="px-4 py-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200 rounded-lg hover:bg-white/5"
+                  className="px-3 lg:px-4 py-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200 rounded-lg hover:bg-white/5 whitespace-nowrap"
                 >
                   {link.name}
                 </a>
@@ -79,7 +109,7 @@ export default function Navigation() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-white hover:text-primary transition-colors"
+              className="md:hidden justify-self-end p-2 text-white hover:text-primary transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}

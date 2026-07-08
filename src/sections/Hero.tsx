@@ -1,5 +1,9 @@
 import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { animate, createAnimatable, createScope, stagger } from 'animejs';
 import { ArrowRight, MapPin, Github, Linkedin, Cpu, Server, Zap } from 'lucide-react';
+
+type Scope = ReturnType<typeof createScope>;
 
 const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -32,7 +36,67 @@ const valueProps = [
   { icon: Zap, text: 'Performance First' },
 ];
 
+/** Splits a string into inline-block letter spans for Anime.js per-character reveals. */
+function SplitLetters({ text, className = '' }: { text: string; className?: string }) {
+  return (
+    <>
+      {text.split('').map((char, i) => (
+        <span
+          key={`${char}-${i}`}
+          className={`hero-letter inline-block opacity-0 will-change-transform ${className}`}
+          style={{ whiteSpace: char === ' ' ? 'pre' : undefined }}
+        >
+          {char}
+        </span>
+      ))}
+    </>
+  );
+}
+
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const scopeRef = useRef<Scope | null>(null);
+
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+
+    let handlePointerMove: ((e: PointerEvent) => void) | null = null;
+
+    scopeRef.current = createScope({ root }).add(() => {
+      // Per-letter name reveal: fade + rise + slight 3D rotation, staggered
+      animate('.hero-letter', {
+        opacity: [0, 1],
+        translateY: [26, 0],
+        rotateX: [-70, 0],
+        duration: 900,
+        delay: stagger(28, { start: 300 }),
+        ease: 'out(4)',
+      });
+
+      // Cursor-reactive floating orbs
+      const orbA = createAnimatable('.hero-orb-a', { x: 600, y: 600, ease: 'out(3)' });
+      const orbB = createAnimatable('.hero-orb-b', { x: 600, y: 600, ease: 'out(3)' });
+
+      handlePointerMove = (e: PointerEvent) => {
+        const rect = root.getBoundingClientRect();
+        const relX = (e.clientX - rect.left) / rect.width - 0.5;
+        const relY = (e.clientY - rect.top) / rect.height - 0.5;
+        orbA.x(relX * 60);
+        orbA.y(relY * 60);
+        orbB.x(relX * -40);
+        orbB.y(relY * -40);
+      };
+
+      root.addEventListener('pointermove', handlePointerMove);
+    });
+
+    return () => {
+      if (handlePointerMove) root.removeEventListener('pointermove', handlePointerMove);
+      scopeRef.current?.revert();
+    };
+  }, []);
+
   const handleScroll = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
@@ -49,6 +113,7 @@ export default function Hero() {
   return (
     <section
       id="home"
+      ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Background Image */}
@@ -64,14 +129,14 @@ export default function Hero() {
       {/* Floating Elements */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <motion.div
-          animate={{ y: [0, -20, 0], opacity: [0.3, 0.6, 0.3] }}
+          animate={{ opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl"
+          className="hero-orb-a absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl"
         />
         <motion.div
-          animate={{ y: [0, 20, 0], opacity: [0.2, 0.5, 0.2] }}
+          animate={{ opacity: [0.2, 0.5, 0.2] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"
+          className="hero-orb-b absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"
         />
       </div>
 
@@ -109,14 +174,14 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          {/* Name */}
-          <motion.h1
-            variants={itemVariants}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-4"
-          >
-            Gajjala{' '}
-            <span className="text-gradient">Ashok Kumar Reddy</span>
-          </motion.h1>
+          {/* Name — per-letter Anime.js reveal */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-4">
+            <SplitLetters text="Gajjala " />
+            <SplitLetters
+              text="Ashok Kumar Reddy"
+              className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary"
+            />
+          </h1>
 
           {/* Title */}
           <motion.p

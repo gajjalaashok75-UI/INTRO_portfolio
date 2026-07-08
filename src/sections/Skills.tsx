@@ -15,25 +15,25 @@ const skillCategories = [
   {
     title: 'Programming Languages',
     icon: Code2,
-    skills: ['Python', 'Java', 'HTML/CSS', 'JavaScript ','SQL', 'Bash', 'C'],
+    skills: ['Python', 'TypeScript', 'Java', 'HTML/CSS', 'JavaScript', 'SQL', 'Bash', 'C'],
     color: 'from-blue-500/20 to-cyan-500/20',
   },
   {
     title: 'AI & Data Science',
     icon: Cpu,
-    skills: ['Machine Learning', 'Data Analysis (NumPy, Pandas)', 'Model Integration & Inference', 'Hugging Face Transformers'],
+    skills: ['Machine Learning', 'Data Analysis (NumPy, Pandas)', 'Model Integration & Inference', 'Hugging Face Transformers', 'AI Agent / CLI Tooling', 'MCP Integration'],
     color: 'from-purple-500/20 to-pink-500/20',
   },
   {
     title: 'Tools & Platforms',
     icon: Terminal,
-    skills: ['Git & GitHub', 'VS Code', 'Jupyter Notebook', 'Docker (Basic)', 'Hugging Face Hub','Kaggle', 'Google Colab'],
+    skills: ['Git & GitHub', 'VS Code', 'Jupyter Notebook', 'Docker (Basic)', 'Hugging Face Hub', 'Kaggle', 'Google Colab', 'Node.js / Bun'],
     color: 'from-orange-500/20 to-red-500/20',
   },
   {
     title: 'Web Development',
     icon: Globe,
-    skills: ['Frontend (HTML, CSS, JavaScript)', 'Responsive Design', 'REST APIs Integration', 'Flask', 'FastAPI', 'Basic React'],
+    skills: ['Frontend (HTML, CSS, JavaScript)', 'Responsive Design', 'REST APIs Integration', 'Flask', 'FastAPI', 'React', 'Web Scraping & Automation'],
     color: 'from-green-500/20 to-emerald-500/20',
   },
 ];

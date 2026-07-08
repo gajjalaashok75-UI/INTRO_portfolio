@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { animate } from 'animejs';
 import { GraduationCap, School, BookOpen, Award } from 'lucide-react';
 
 const educationData = [
@@ -56,6 +57,18 @@ const itemVariants = {
 export default function Education() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const linePlayedRef = useRef(false);
+
+  useEffect(() => {
+    if (isInView && !linePlayedRef.current) {
+      linePlayedRef.current = true;
+      animate('.education-timeline-line', {
+        scaleY: [0, 1],
+        duration: 1200,
+        ease: 'inOut(3)',
+      });
+    }
+  }, [isInView]);
 
   return (
     <section id="education" className="relative py-24 md:py-32 bg-dark-light">
@@ -84,8 +97,11 @@ export default function Education() {
           animate={isInView ? "visible" : "hidden"}
           className="relative"
         >
-          {/* Timeline Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-dark-border md:-translate-x-px" />
+          {/* Timeline Line — Anime.js draws this in from the top */}
+          <div
+            className="education-timeline-line absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-primary md:-translate-x-px"
+            style={{ transformOrigin: 'top', transform: 'scaleY(0)' }}
+          />
 
           {/* Education Items */}
           <div className="space-y-12">

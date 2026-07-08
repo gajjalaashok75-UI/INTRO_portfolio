@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
-import { animate, createAnimatable, createScope, stagger } from 'animejs';
+import { animate, createAnimatable, createScope, splitText, stagger } from 'animejs';
 import { ArrowRight, MapPin, Github, Linkedin, Cpu, Server, Zap } from 'lucide-react';
 
 type Scope = ReturnType<typeof createScope>;
@@ -36,23 +36,6 @@ const valueProps = [
   { icon: Zap, text: 'Performance First' },
 ];
 
-/** Splits a string into inline-block letter spans for Anime.js per-character reveals. */
-function SplitLetters({ text, className = '' }: { text: string; className?: string }) {
-  return (
-    <>
-      {text.split('').map((char, i) => (
-        <span
-          key={`${char}-${i}`}
-          className={`hero-letter inline-block opacity-0 will-change-transform ${className}`}
-          style={{ whiteSpace: char === ' ' ? 'pre' : undefined }}
-        >
-          {char}
-        </span>
-      ))}
-    </>
-  );
-}
-
 export default function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const scopeRef = useRef<Scope | null>(null);
@@ -64,8 +47,25 @@ export default function Hero() {
     let handlePointerMove: ((e: PointerEvent) => void) | null = null;
 
     scopeRef.current = createScope({ root }).add(() => {
-      // Per-letter name reveal: fade + rise + slight 3D rotation, staggered
-      animate('.hero-letter', {
+      // splitText() keeps each word as an atomic wrapper so lines never
+      // break mid-word, while still exposing chars for a per-letter stagger.
+      const plain = splitText('.hero-name-plain', { chars: true });
+      const gradient = splitText('.hero-name-gradient', { chars: true });
+      gradient.chars.forEach((el) => {
+        el.classList.add(
+          'bg-clip-text',
+          'text-transparent',
+          'bg-gradient-to-r',
+          'from-primary',
+          'to-secondary'
+        );
+      });
+      const allChars = [...plain.chars, ...gradient.chars];
+      allChars.forEach((el) => {
+        (el as HTMLElement).style.opacity = '0';
+      });
+
+      animate(allChars, {
         opacity: [0, 1],
         translateY: [26, 0],
         rotateX: [-70, 0],
@@ -174,13 +174,10 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          {/* Name — per-letter Anime.js reveal */}
+          {/* Name — Anime.js splitText() reveal, word-safe wrapping */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-4">
-            <SplitLetters text="Gajjala " />
-            <SplitLetters
-              text="Ashok Kumar Reddy"
-              className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary"
-            />
+            <span className="hero-name-plain">Gajjala </span>
+            <span className="hero-name-gradient">Ashok Kumar Reddy</span>
           </h1>
 
           {/* Title */}

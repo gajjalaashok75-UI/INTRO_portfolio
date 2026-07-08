@@ -5,19 +5,6 @@ import { ExternalLink, Github, ArrowUpRight, Bot, Sparkles, Terminal, SearchCode
 
 const projects = [
   {
-    title: 'GAKR AI Chatbot',
-    description: 'A production-ready AI chatbot with a FastAPI backend and a responsive frontend. Streams responses in real time, renders Markdown with syntax-highlighted code blocks, and runs optimized CPU-only inference through llama.cpp and GGUF models — built for reliability, not just a demo.',
-    image: '/project-ai.jpg',
-    tech: ['FastAPI', 'Python', 'LLM', 'Streaming', 'GGUF', 'llama.cpp'],
-    links: {
-      demo: 'https://ashok75-gakr.hf.space',
-      source: 'https://github.com/239x1a3242-maker',
-    },
-    icon: Bot,
-    featured: true,
-    badge: 'Live Project',
-  },
-  {
     title: 'GakrCLI',
     description: 'A terminal-first AI coding agent that unifies over 200 model providers — OpenAI, Anthropic, Gemini, DeepSeek, local Ollama models, and more — behind one command-line workflow. Handles file edits, shell commands, multi-turn sessions, MCP tool integration, and agent routing, with a companion VS Code extension and an optional headless gRPC server for embedding it into other tools.',
     image: '/project-gakrcli.jpg',
@@ -28,7 +15,7 @@ const projects = [
     },
     icon: Terminal,
     featured: true,
-    badge: 'Open Source',
+    badge: 'Featured Project',
   },
   {
     title: 'scout-it',
@@ -40,6 +27,19 @@ const projects = [
       source: 'https://github.com/gajjalaashok75-UI/scout-it',
     },
     icon: SearchCode,
+    featured: true,
+    badge: 'Open Source',
+  },
+  {
+    title: 'GAKR AI Chatbot',
+    description: 'A production-ready AI chatbot with a FastAPI backend and a responsive frontend. Streams responses in real time, renders Markdown with syntax-highlighted code blocks, and runs optimized CPU-only inference through llama.cpp and GGUF models — built for reliability, not just a demo.',
+    image: '/project-ai.jpg',
+    tech: ['FastAPI', 'Python', 'LLM', 'Streaming', 'GGUF', 'llama.cpp'],
+    links: {
+      demo: 'https://ashok75-gakr.hf.space',
+      source: 'https://github.com/239x1a3242-maker',
+    },
+    icon: Bot,
     featured: false,
     badge: null,
   },

@@ -12,6 +12,7 @@ const navLinks = [
   { name: 'Skills', href: '#skills' },
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
+  { name: 'Certificates', href: '#certificates' },
   { name: 'Contact', href: '#contact' },
 ];
 
@@ -75,31 +76,39 @@ export default function Navigation() {
         }`}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-[auto_1fr_auto] sm:grid-cols-3 items-center h-[72px] gap-2">
+          <div className="flex items-center justify-between h-[72px] gap-2">
             {/* Logo */}
             <motion.a
               href="#home"
               onClick={(e) => handleLinkClick(e, '#home')}
               onMouseEnter={() => navScopeRef.current?.methods.pingLogo?.()}
-              className="gakr-logo justify-self-start text-xl font-bold text-white tracking-tight"
+              className="gakr-logo flex items-center gap-2 shrink-0 text-lg sm:text-xl font-bold text-white tracking-tight"
               whileHover={{ scale: 1.02 }}
             >
+              <img
+                src="/logo.svg"
+                alt="GAKR logo"
+                width={30}
+                height={30}
+                className="gakr-logo-mark w-7 h-7 sm:w-[30px] sm:h-[30px] shrink-0"
+              />
               <span className="text-primary">GA</span>KR
             </motion.a>
 
-            {/* Live Clock — always visually centered */}
-            <div className="justify-self-center">
+            {/* Live Clock — centered in the remaining space between logo and nav/menu */}
+            <div className="flex-1 min-w-0 flex justify-center overflow-hidden">
               <LiveClock />
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1 justify-self-end">
+            {/* Desktop Navigation — only from lg up, where there's guaranteed room
+                next to the logo + clock without ever overlapping either */}
+            <div className="hidden lg:flex items-center gap-1 shrink-0">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
-                  className="px-3 lg:px-4 py-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200 rounded-lg hover:bg-white/5 whitespace-nowrap"
+                  className="px-3 py-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200 rounded-lg hover:bg-white/5 whitespace-nowrap"
                 >
                   {link.name}
                 </a>
@@ -109,7 +118,7 @@ export default function Navigation() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden justify-self-end p-2 text-white hover:text-primary transition-colors"
+              className="lg:hidden shrink-0 p-2 text-white hover:text-primary transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -126,7 +135,7 @@ export default function Navigation() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 md:hidden"
+            className="fixed inset-0 z-40 lg:hidden"
           >
             <div
               className="absolute inset-0 bg-black/60 backdrop-blur-sm"

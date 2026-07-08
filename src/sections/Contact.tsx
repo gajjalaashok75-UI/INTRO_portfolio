@@ -68,7 +68,7 @@ export default function Contact() {
           transition={{ duration: 0.6, ease: easeOutExpo }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-mono text-sm mb-4 block">05. Contact</span>
+          <span className="text-primary font-mono text-sm mb-4 block">06. Contact</span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
             Let's <span className="text-gradient">Connect</span>
           </h2>

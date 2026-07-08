@@ -1,0 +1,35 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gakrGrad" x1="2" y1="2" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5B8CFF"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <linearGradient id="gakrGradSoft" x1="8" y1="8" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5B8CFF" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hexagon frame -->
+  <path
+    d="M20 2L35.3205 11V29L20 38L4.67949 29V11L20 2Z"
+    stroke="url(#gakrGrad)"
+    stroke-width="2"
+    fill="url(#gakrGradSoft)"
+  />
+
+  <!-- Inner "G" formed from an open circuit arc -->
+  <path
+    d="M25.5 15.2C24.2 13.7 22.3 12.8 20.1 12.8C16.2 12.8 13 16 13 20C13 24 16.2 27.2 20.1 27.2C23.6 27.2 26.5 24.7 27.1 21.4H20.6"
+    stroke="white"
+    stroke-width="2.1"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Circuit node accents -->
+  <circle cx="27.1" cy="21.4" r="1.6" fill="#22D3EE"/>
+  <circle cx="13" cy="20" r="1.4" fill="#5B8CFF"/>
+  <circle cx="20" cy="2" r="1.5" fill="#5B8CFF"/>
+  <circle cx="20" cy="38" r="1.5" fill="#22D3EE"/>
+</svg>

@@ -1,6 +1,22 @@
 # Changelog
 
-## [1.1.0] - 2026-07-08
+## [1.2.0] - 2026-07-08
+
+### Added
+- `Certificates` section — 12 certificates displayed in a responsive 2–4 column grid with hover shine effect, "Show all" toggle (shows 6 initially), and a full-screen lightbox with keyboard navigation (arrow keys + Escape), prev/next buttons, and open/close animations via Anime.js
+- `logo.svg` — SVG favicon/logo replacing the emoji data-URI favicon
+- Certificate images — 12 certificate assets under `public/certificates/`
+- `xs: 400px` breakpoint in Tailwind config for tighter screen handling
+- `splitText()` integration in Hero — replaces manual `SplitLetters` component with Anime.js v4's `splitText()` for word-safe per-character reveal
+- Clock hover shine sweep animation (`shine` method) triggered on pointer enter
+
+### Changed
+- Navigation: CSS grid layout reverted to flex for better responsive behavior; added inline SVG logo mark; desktop nav breakpoint bumped from `md` to `lg` to prevent overlap with the clock; Certificates link added; mobile menu breakpoint also bumped to `lg`
+- LiveClock: shine effect on hover; seconds/colon breakpoint relaxed from `md` to `sm`; city label breakpoint tightened from `lg` to `md` with truncation; max-width increased to `52vw` on smallest screens
+- Projects: reordered — GakrCLI moved to first position (featured), scout-it promoted to featured, GAKR AI Chatbot demoted to non-featured
+- Contact section number: `05.` → `06.` (Certificates inserted before Contact)
+- Hero: removed `SplitLetters` manual component in favor of `splitText()` API with cleaner gradient class handling
+- `package-lock.json`: dependency resolution updates (caniuse-lite, baseline-browser-mapping)
 
 ### Added
 - `animejs` dependency — powers per-letter text reveals, cursor-reactive orbs, 3D card tilt, timeline draw, and nav logo ping

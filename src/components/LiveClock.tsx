@@ -113,6 +113,13 @@ export default function LiveClock() {
           ease: 'out(3)',
         });
       });
+      self.add('shine', () => {
+        animate('.gakr-clock-shine', {
+          left: ['-40%', '140%'],
+          duration: 750,
+          ease: 'inOut(2)',
+        });
+      });
       animate('.gakr-clock-colon', {
         opacity: [1, 0.25, 1],
         duration: 1000,
@@ -147,16 +154,23 @@ export default function LiveClock() {
   return (
     <div
       ref={rootRef}
-      className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5 px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full bg-white/5 border border-dark-border backdrop-blur-sm select-none max-w-[46vw] sm:max-w-none"
+      onPointerEnter={() => scopeRef.current?.methods.shine?.()}
+      className="gakr-clock relative flex items-center gap-1.5 sm:gap-2 md:gap-2.5 px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full bg-white/5 border border-dark-border backdrop-blur-sm select-none max-w-[52vw] xs:max-w-[46vw] sm:max-w-none overflow-hidden transition-colors duration-300 hover:bg-white/10 hover:border-primary/40"
       aria-label={`Local time ${state.time} in ${state.city ?? state.timeZone}`}
     >
-      <Clock size={14} className="text-primary shrink-0" />
-      <div className="flex items-baseline gap-1 font-mono text-xs md:text-sm text-white tabular-nums">
+      {/* Hover shine sweep */}
+      <span
+        className="gakr-clock-shine pointer-events-none absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-white/25 to-transparent -skew-x-12"
+        style={{ left: '-40%' }}
+        aria-hidden="true"
+      />
+      <Clock size={14} className="text-primary shrink-0 relative" />
+      <div className="relative flex items-baseline gap-1 font-mono text-xs md:text-sm text-white tabular-nums">
         <span>{hm.split(':')[0]}</span>
         <span className="gakr-clock-colon text-primary">:</span>
         <span>{hm.split(':')[1]}</span>
-        <span className="gakr-clock-colon text-primary hidden md:inline">:</span>
-        <span className="gakr-clock-seconds hidden md:inline text-muted-foreground">
+        <span className="gakr-clock-colon text-primary hidden sm:inline">:</span>
+        <span className="gakr-clock-seconds hidden sm:inline text-muted-foreground">
           {seconds}
         </span>
         {meridiem && (
@@ -165,9 +179,9 @@ export default function LiveClock() {
           </span>
         )}
       </div>
-      <span className="hidden lg:flex items-center gap-1 pl-2 ml-1 border-l border-dark-border text-xs text-muted-foreground">
-        <MapPin size={12} className="text-secondary" />
-        {state.city ?? cityFromTimeZone(state.timeZone)}
+      <span className="hidden md:flex items-center gap-1 pl-2 ml-1 border-l border-dark-border text-xs text-muted-foreground max-w-[110px] lg:max-w-[160px] truncate">
+        <MapPin size={12} className="text-secondary shrink-0" />
+        <span className="truncate">{state.city ?? cityFromTimeZone(state.timeZone)}</span>
       </span>
     </div>
   );

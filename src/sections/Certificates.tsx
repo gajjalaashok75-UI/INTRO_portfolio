@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { animate, createLayout } from 'animejs';
+import { animate, createScope } from 'animejs';
 import { Award, ChevronLeft, ChevronRight, X, Maximize2, LayoutGrid } from 'lucide-react';
+
+type Scope = ReturnType<typeof createScope>;
 
 interface Certificate {
   title: string;
@@ -105,19 +107,20 @@ const cardVariants = {
 };
 
 /**
- * A certificate card with a shine sweep on hover and a data-layout-id
- * for Anime.js Layout to morph into the dialog on click.
+ * A certificate card. Framer Motion (already used throughout the site) owns
+ * entrance, the dimmed "peeking from the background" resting state, and the
+ * hover pop — one engine, no fights over the same transform. Anime.js gets
+ * its own, non-competing job: a light sweep across a separate overlay node
+ * on hover, the same trick used on the header clock.
  */
 function CertCard({
   cert,
   dimmed,
   onOpen,
-  index,
 }: {
   cert: Certificate;
   dimmed: boolean;
   onOpen: () => void;
-  index: number;
 }) {
   const shineRef = useRef<HTMLSpanElement | null>(null);
 
@@ -132,7 +135,6 @@ function CertCard({
 
   return (
     <motion.button
-      data-layout-id={`cert-${index}`}
       custom={dimmed}
       variants={cardVariants}
       whileHover={{ opacity: 1, scale: 1.04, filter: 'blur(0px) grayscale(0%)' }}
@@ -174,36 +176,21 @@ export default function Certificates() {
 
   const [showAll, setShowAll] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const layoutRef = useRef<ReturnType<typeof createLayout> | null>(null);
-  const activeIndexRef = useRef<number | null>(null);
-  const openAnimationDoneRef = useRef(false);
-
-  // Keep ref in sync with state for use inside stable callbacks
-  useEffect(() => { activeIndexRef.current = activeIndex; }, [activeIndex]);
+  const [closing, setClosing] = useState(false);
+  const lightboxScopeRef = useRef<Scope | null>(null);
+  const lightboxRootRef = useRef<HTMLDivElement | null>(null);
 
   const openLightbox = (index: number) => {
+    setClosing(false);
     setActiveIndex(index);
   };
 
   const closeLightbox = useCallback(() => {
-    const dialog = dialogRef.current;
-    const layout = layoutRef.current;
-    if (!dialog) return;
-
-    if (layout) {
-      const idx = activeIndexRef.current;
-      layout.update(() => {
-        dialog.close();
-        if (idx !== null) {
-          document.querySelector(`[data-layout-id="cert-${idx}"]`)?.classList.remove('is-open');
-        }
-      }).then(() => {
-        setActiveIndex(null);
-        layoutRef.current = null;
-        openAnimationDoneRef.current = false;
-      });
-    }
+    setClosing(true);
+    window.setTimeout(() => {
+      setActiveIndex(null);
+      setClosing(false);
+    }, 220);
   }, []);
 
   const step = useCallback((dir: 1 | -1) => {
@@ -213,78 +200,33 @@ export default function Certificates() {
     });
   }, []);
 
-  // Sync is-open class on grid cards with active index
-  useEffect(() => {
-    document.querySelectorAll('[data-layout-id^="cert-"]').forEach((el) => {
-      const card = el as HTMLElement;
-      if (activeIndex !== null && card.dataset.layoutId === `cert-${activeIndex}`) {
-        card.classList.add('is-open');
-      } else {
-        card.classList.remove('is-open');
-      }
-    });
-  }, [activeIndex]);
-
-  // Open animation via Anime.js Layout — runs once when dialog first opens
-  useEffect(() => {
-    if (activeIndex === null) {
-      openAnimationDoneRef.current = false;
-      return;
-    }
-
-    const dialog = dialogRef.current;
-    if (!dialog || openAnimationDoneRef.current) return;
-
-    openAnimationDoneRef.current = true;
-
-    const card = document.querySelector(`[data-layout-id="cert-${activeIndex}"]`);
-
-    const layout = createLayout(dialog, {
-      duration: 900,
-      ease: 'out(4)',
-      properties: ['--overlay-alpha'],
-    });
-
-    layoutRef.current = layout;
-
-    layout.update(() => {
-      dialog.showModal();
-      if (card) card.classList.add('is-open');
-    });
-  }, [activeIndex]);
-
-  // Dialog event listeners (cancel + backdrop click) — stable, no deps issue
+  // Lightbox open animation, scoped so it auto-reverts on close
   useEffect(() => {
     if (activeIndex === null) return;
+    const root = lightboxRootRef.current;
+    if (!root) return;
 
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    const onCancel = (e: Event) => { e.preventDefault(); closeLightbox(); };
-    const onBackdropClick = (e: MouseEvent) => {
-      if (e.target === dialog) closeLightbox();
-    };
-
-    dialog.addEventListener('cancel', onCancel);
-    dialog.addEventListener('click', onBackdropClick);
-
-    return () => {
-      dialog.removeEventListener('cancel', onCancel);
-      dialog.removeEventListener('click', onBackdropClick);
-    };
-  }, [activeIndex, closeLightbox]);
-
-  // Keyboard navigation (arrow keys)
-  useEffect(() => {
-    if (activeIndex === null) return;
+    lightboxScopeRef.current = createScope({ root }).add(() => {
+      animate('.cert-lightbox-backdrop', { opacity: [0, 1], duration: 250, ease: 'out(2)' });
+      animate('.cert-lightbox-frame', {
+        opacity: [0, 1],
+        scale: [0.88, 1],
+        duration: 350,
+        ease: 'out(3)',
+      });
+    });
 
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowRight') step(1);
       if (e.key === 'ArrowLeft') step(-1);
     };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [activeIndex, step]);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      lightboxScopeRef.current?.revert();
+    };
+  }, [activeIndex, closeLightbox, step]);
 
   const handleShowAll = () => setShowAll(true);
 
@@ -322,7 +264,6 @@ export default function Certificates() {
               cert={cert}
               dimmed={!showAll && index >= VISIBLE_COUNT}
               onOpen={() => openLightbox(index)}
-              index={index}
             />
           ))}
         </motion.div>
@@ -362,22 +303,26 @@ export default function Certificates() {
         </motion.div>
       </div>
 
-      {/* Lightbox Dialog */}
-      <dialog
-        ref={dialogRef}
-        className="cert-dialog"
-      >
-        {active && (
+      {/* Lightbox */}
+      {active && (
+        <div ref={lightboxRootRef} className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
           <div
-            data-layout-id={`cert-${activeIndex}`}
-            className="relative z-10 max-w-4xl w-full flex flex-col items-center p-4 md:p-8"
+            className={`cert-lightbox-backdrop absolute inset-0 bg-black/85 backdrop-blur-md transition-opacity duration-200 ${
+              closing ? 'opacity-0' : ''
+            }`}
+            onClick={closeLightbox}
+          />
+          <div
+            className={`cert-lightbox-frame relative z-10 max-w-4xl w-full transition-all duration-200 ${
+              closing ? 'opacity-0 scale-95' : ''
+            }`}
           >
             <img
               src={active.image}
               alt={active.title}
               className="w-full max-h-[75vh] object-contain rounded-xl bg-dark-card border border-dark-border"
             />
-            <div className="mt-4 flex items-center justify-between gap-4 text-center sm:text-left flex-col sm:flex-row w-full">
+            <div className="mt-4 flex items-center justify-between gap-4 text-center sm:text-left flex-col sm:flex-row">
               <div>
                 <p className="text-white font-semibold">{active.title}</p>
                 <p className="text-muted-foreground text-sm">
@@ -392,7 +337,7 @@ export default function Certificates() {
             {/* Close */}
             <button
               onClick={closeLightbox}
-              className="absolute top-1 right-1 sm:top-0 sm:-right-14 p-2.5 rounded-full bg-dark-card border border-dark-border text-white hover:text-primary hover:border-primary transition-colors z-20"
+              className="absolute -top-3 -right-3 sm:top-0 sm:-right-14 p-2.5 rounded-full bg-dark-card border border-dark-border text-white hover:text-primary hover:border-primary transition-colors"
               aria-label="Close"
             >
               <X size={20} />
@@ -401,21 +346,21 @@ export default function Certificates() {
             {/* Prev / Next */}
             <button
               onClick={() => step(-1)}
-              className="absolute top-1/3 -left-2 sm:-left-16 p-2.5 rounded-full bg-dark-card border border-dark-border text-white hover:text-primary hover:border-primary transition-colors z-20"
+              className="absolute top-1/3 -left-2 sm:-left-16 p-2.5 rounded-full bg-dark-card border border-dark-border text-white hover:text-primary hover:border-primary transition-colors"
               aria-label="Previous certificate"
             >
               <ChevronLeft size={20} />
             </button>
             <button
               onClick={() => step(1)}
-              className="absolute top-1/3 -right-2 sm:-right-16 p-2.5 rounded-full bg-dark-card border border-dark-border text-white hover:text-primary hover:border-primary transition-colors z-20"
+              className="absolute top-1/3 -right-2 sm:-right-16 p-2.5 rounded-full bg-dark-card border border-dark-border text-white hover:text-primary hover:border-primary transition-colors"
               aria-label="Next certificate"
             >
               <ChevronRight size={20} />
             </button>
           </div>
-        )}
-      </dialog>
+        </div>
+      )}
     </section>
   );
 }

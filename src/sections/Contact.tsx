@@ -15,7 +15,7 @@ import {
 
 const socialLinks = [
   { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/gajjala-ashok-kumar-reddy-747510353', color: 'hover:text-[#0077B5]' },
-  { name: 'GitHub', icon: Github, url: 'https://github.com/239x1a3242-maker', color: 'hover:text-white' },
+  { name: 'GitHub', icon: Github, url: 'https://github.com/gajjalaashok75-UI', color: 'hover:text-white' },
   { name: 'Hugging Face', icon: ExternalLink, url: 'https://huggingface.co/Ashok75', color: 'hover:text-[#FFD21E]' },
   { name: 'Twitter/X', icon: Twitter, url: 'https://x.com/AGajjala56550', color: 'hover:text-white' },
   { name: 'Telegram', icon: MessageCircle, url: 'https://t.me/Heisenberg7582', color: 'hover:text-[#0088cc]' },

@@ -225,7 +225,7 @@ export default function Hero() {
           {/* Social Links */}
           <motion.div variants={itemVariants} className="flex items-center justify-center gap-4">
             <motion.a
-              href="https://github.com/239x1a3242-maker"
+              href="https://github.com/gajjalaashok75-UI"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-xl bg-white/5 text-muted-foreground hover:text-white hover:bg-white/10 transition-all duration-300"

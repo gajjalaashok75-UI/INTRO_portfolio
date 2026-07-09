@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2026-07-09
+
+### Changed
+- Footer: replaced "GAKR AI Chatbot" and "AI/ML Models" with "gakrcli" and "scout-it" linked to their GitHub repos
+- GitHub profile URL updated from `239x1a3242-maker` to `gajjalaashok75-UI` across Footer, Hero, Contact, and Projects sections
+
 ## [1.2.0] - 2026-07-08
 
 ### Added

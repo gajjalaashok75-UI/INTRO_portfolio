@@ -11,7 +11,7 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { name: 'GitHub', icon: Github, url: 'https://github.com/239x1a3242-maker', color: 'hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.5)]' },
+  { name: 'GitHub', icon: Github, url: 'https://github.com/gajjalaashok75-UI', color: 'hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.5)]' },
   { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/gajjala-ashok-kumar-reddy-747510353', color: 'hover:text-[#0A66C2] hover:shadow-[0_0_20px_#0A66C2]' },
   { name: 'Twitter/X', icon: Twitter, url: 'https://x.com/AGajjala56550', color: 'hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.5)]' },
   { name: 'Telegram', icon: MessageCircle, url: 'https://t.me/Heisenberg7582', color: 'hover:text-[#0088cc] hover:shadow-[0_0_20px_#0088cc]' },
@@ -106,13 +106,13 @@ export default function Footer() {
               <ul className="space-y-2">
                 <li>
                   <a
-                    href="https://ashok75-gakr.hf.space"
+                    href="https://github.com/gajjalaashok75-UI/GakrCLI"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-2 group"
                   >
                     <span className="relative">
-                      GAKR AI Chatbot
+                      gakrcli
                       <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-gradient-to-r from-[#ff4ec6] via-[#a048ff] to-[#4ac6ff] group-hover:w-full transition-all duration-300" />
                     </span>
                     <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -120,13 +120,13 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href="https://huggingface.co/Ashok75"
+                    href="https://github.com/gajjalaashok75-UI/scout-it"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-2 group"
                   >
                     <span className="relative">
-                      AI/ML Models
+                      scout-it
                       <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-gradient-to-r from-[#ff4ec6] via-[#a048ff] to-[#4ac6ff] group-hover:w-full transition-all duration-300" />
                     </span>
                     <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -134,7 +134,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href="https://github.com/239x1a3242-maker"
+                    href="https://github.com/gajjalaashok75-UI"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-2 group"

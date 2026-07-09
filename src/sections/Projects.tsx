@@ -37,7 +37,7 @@ const projects = [
     tech: ['FastAPI', 'Python', 'LLM', 'Streaming', 'GGUF', 'llama.cpp'],
     links: {
       demo: 'https://ashok75-gakr.hf.space',
-      source: 'https://github.com/239x1a3242-maker',
+      source: 'https://github.com/gajjalaashok75-UI',
     },
     icon: Bot,
     featured: false,
@@ -50,7 +50,7 @@ const projects = [
     tech: ['Python', 'Hugging Face', 'Qwen', 'DeepSeek', 'TensorFlow'],
     links: {
       demo: 'https://huggingface.co/Ashok75',
-      source: 'https://github.com/239x1a3242-maker',
+      source: 'https://github.com/gajjalaashok75-UI',
     },
     icon: null,
     featured: false,
@@ -63,7 +63,7 @@ const projects = [
     tech: ['HTML', 'CSS', 'JavaScript', 'Python', 'Flask'],
     links: {
       demo: 'https://ashok75-gakr.hf.space',
-      source: 'https://github.com/239x1a3242-maker',
+      source: 'https://github.com/gajjalaashok75-UI',
     },
     icon: null,
     featured: false,
@@ -75,7 +75,7 @@ const projects = [
     image: '/project-academic.jpg',
     tech: ['Python', 'Pandas', 'Matplotlib', 'NumPy', 'Seaborn'],
     links: {
-      source: 'https://github.com/239x1a3242-maker',
+      source: 'https://github.com/gajjalaashok75-UI',
     },
     icon: null,
     featured: false,

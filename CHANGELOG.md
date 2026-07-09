@@ -5,6 +5,7 @@
 ### Changed
 - Footer: replaced "GAKR AI Chatbot" and "AI/ML Models" with "gakrcli" and "scout-it" linked to their GitHub repos
 - GitHub profile URL updated from `239x1a3242-maker` to `gajjalaashok75-UI` across Footer, Hero, Contact, and Projects sections
+- Certificates lightbox: replaced manual animate+scope with Anime.js Layout modal dialog pattern for 900ms slow-motion open/close transitions with backdrop morph animation
 
 ## [1.2.0] - 2026-07-08
 

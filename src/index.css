@@ -101,3 +101,31 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Certificate lightbox dialog */
+.cert-dialog {
+  --overlay-alpha: 100%;
+  width: 100vw;
+  height: 100dvh;
+  max-width: 100vw;
+  max-height: 100dvh;
+  border: 0;
+  padding: 0;
+  background: color-mix(in srgb, black, transparent var(--overlay-alpha));
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-dialog[open] {
+  --overlay-alpha: 15%;
+}
+
+.cert-dialog::backdrop {
+  background: transparent;
+}
+
+.cert-grid .is-open {
+  visibility: hidden;
+}

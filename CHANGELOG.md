@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.2] - 2026-07-12
+
+### Added
+- InternPe AI/ML Internship offer letter and completion certificate to Certificates section
+- `internpe-offer-letter.png` and `internpe-completion-certificate.png` assets
+
 ## [1.2.1] - 2026-07-09
 
 ### Changed

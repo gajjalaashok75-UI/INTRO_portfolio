@@ -44,6 +44,18 @@ const certificates: Certificate[] = [
     image: '/certificates/devit-internship.jpg',
   },
   {
+    title: 'AI/ML Internship Offer Letter',
+    issuer: 'InternPe',
+    date: 'May – Jun 2026',
+    image: '/certificates/internpe-offer-letter.png',
+  },
+  {
+    title: 'AI/ML Internship Completion Certificate',
+    issuer: 'InternPe',
+    date: 'May – Jun 2026',
+    image: '/certificates/internpe-completion-certificate.png',
+  },
+  {
     title: 'NPTEL — Entrepreneurship',
     issuer: 'IIT Madras · Skill India',
     date: 'Jul – Oct 2025',

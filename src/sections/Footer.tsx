@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, MessageCircle, Instagram, Youtube, ExternalLink, Heart, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Twitter, MessageCircle, Instagram, Youtube, Package, ExternalLink, Heart, ArrowUp } from 'lucide-react';
 
 const quickLinks = [
   { name: 'Home', href: '#home' },
@@ -17,6 +17,7 @@ const socialLinks = [
   { name: 'Telegram', icon: MessageCircle, url: 'https://t.me/Heisenberg7582', color: 'hover:text-[#0088cc] hover:shadow-[0_0_20px_#0088cc]' },
   { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/gajjala_ashok_7555', color: 'hover:text-[#E4405F] hover:shadow-[0_0_20px_#E4405F]' },
   { name: 'YouTube', icon: Youtube, url: 'https://youtube.com/@ashokgajjala-j3q', color: 'hover:text-[#FF0000] hover:shadow-[0_0_20px_#FF0000]' },
+  { name: 'npm', icon: Package, url: 'https://www.npmjs.com/~gakr', color: 'hover:text-[#CB3837] hover:shadow-[0_0_20px_#CB3837]' },
 ];
 
 export default function Footer() {
@@ -112,7 +113,7 @@ export default function Footer() {
                     className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-2 group"
                   >
                     <span className="relative">
-                      gakrcli
+                      GakrCLI
                       <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-gradient-to-r from-[#ff4ec6] via-[#a048ff] to-[#4ac6ff] group-hover:w-full transition-all duration-300" />
                     </span>
                     <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -126,7 +127,7 @@ export default function Footer() {
                     className="text-gray-400 hover:text-white transition-all duration-300 flex items-center gap-2 group"
                   >
                     <span className="relative">
-                      scout-it
+                      Scout-It
                       <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-gradient-to-r from-[#ff4ec6] via-[#a048ff] to-[#4ac6ff] group-hover:w-full transition-all duration-300" />
                     </span>
                     <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />

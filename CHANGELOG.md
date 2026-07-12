@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.4] - 2026-07-12
+
+### Added
+- npm social link in Footer with Package icon
+- Registry links (npm for GakrCLI, PyPI for scout-it) in Projects section with Package icon button
+
+### Changed
+- Footer project names capitalized: "gakrcli" → "GakrCLI", "scout-it" → "Scout-It"
+
 ## [1.2.3] - 2026-07-12
 
 ### Added

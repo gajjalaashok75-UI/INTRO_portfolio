@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { createAnimatable } from 'animejs';
-import { ExternalLink, Github, ArrowUpRight, Bot, Sparkles, Terminal, SearchCode } from 'lucide-react';
+import { ExternalLink, Github, ArrowUpRight, Bot, Sparkles, Terminal, SearchCode, Package } from 'lucide-react';
 
 const projects = [
   {
@@ -12,6 +12,7 @@ const projects = [
     links: {
       demo: 'https://gakrcli.netlify.app/',
       source: 'https://github.com/gajjalaashok75-UI/GakrCLI',
+      registry: 'https://www.npmjs.com/package/@gakr-gakr/gakrcli',
     },
     icon: Terminal,
     featured: true,
@@ -25,6 +26,7 @@ const projects = [
     links: {
       demo: 'https://datascout.netlify.app/',
       source: 'https://github.com/gajjalaashok75-UI/scout-it',
+      registry: 'https://pypi.org/project/scout-it/',
     },
     icon: SearchCode,
     featured: true,
@@ -237,6 +239,19 @@ export default function Projects() {
                           aria-label="View Source"
                         >
                           <Github size={18} />
+                        </motion.a>
+                      )}
+                      {project.links.registry && (
+                        <motion.a
+                          href={project.links.registry}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-lg bg-white/5 text-muted-foreground hover:text-white hover:bg-white/10 transition-all"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          aria-label="View Package Registry"
+                        >
+                          <Package size={18} />
                         </motion.a>
                       )}
                       {project.links.demo && (

@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.3] - 2026-07-12
+
+### Added
+- Devit Real-Time Internship offer letter to Certificates section
+- `devit-offer-letter.jpg` asset
+
+### Changed
+- About section bio rewritten — removed FastAPI-specific language, generalized to CLI/integration/developer tools focus
+- Hero section CTA: link updated from `ashok75-gakr.hf.space` to `gakrcli.netlify.app`, button text from "Try GAKR AI" to "Try GakrCLI"
+- Hero description expanded with GakrCLI and scout-it project highlights and internship context
+
 ## [1.2.2] - 2026-07-12
 
 ### Added

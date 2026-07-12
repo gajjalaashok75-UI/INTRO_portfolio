@@ -193,7 +193,7 @@ export default function Hero() {
             variants={itemVariants}
             className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed mb-10"
           >
-            I build production-ready AI applications powered by pre-trained open-source LLMs. I design robust FastAPI backends and responsive frontends for intelligent, assistant-style systems. My work focuses on performance, reliability, and creating practical AI tools that solve real-world problems.
+            I build practical, production-ready AI tools and full-stack systems. My recent work includes GakrCLI, a terminal-first coding agent that unifies 200+ model providers behind one command-line workflow, and scout-it, an AI-powered toolkit for web search and content extraction. I design robust backends, clean developer experiences, and intelligent assistant-style systems, backed by hands-on internships and certifications in AI/ML, data science, and full-stack development. My focus stays on performance, reliability, and shipping tools that solve real problems.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -202,14 +202,14 @@ export default function Hero() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
           >
             <motion.a
-              href="https://ashok75-gakr.hf.space"
+              href="https://gakrcli.netlify.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 px-8 py-4 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-all duration-300 shadow-glow hover:shadow-glow-lg"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              Try GAKR AI
+              Try GakrCLI
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </motion.a>
             <motion.button

@@ -38,6 +38,12 @@ const certificates: Certificate[] = [
     image: '/certificates/quantum-fundamentals.jpg',
   },
   {
+    title: 'Real-Time Internship Program — Offer Letter',
+    issuer: 'Devit',
+    date: 'May – Jun 2026',
+    image: '/certificates/devit-offer-letter.jpg',
+  },
+  {
     title: 'Real-Time Internship Program',
     issuer: 'Devit',
     date: 'May – Jun 2026',

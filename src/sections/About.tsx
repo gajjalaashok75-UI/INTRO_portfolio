@@ -132,15 +132,15 @@ export default function About() {
 
             <motion.div variants={itemVariants} className="space-y-5 text-muted-foreground leading-relaxed">
               <p className="text-white/90 text-lg">
-                I have hands-on experience working with AI applications powered by pre-trained open-source LLMs.
-                I design robust FastAPI backends and responsive frontends for intelligent, assistant-style systems. My work focuses on performance, 
-                reliability, and creating practical AI tools that solve real-world problems.
+                I have hands-on experience building practical AI tools and full-stack applications, from terminal-based coding agents to web search and automation systems.
+                I design robust backends and clean, responsive frontends for intelligent, developer-friendly systems. My work focuses on performance, 
+                reliability, and creating tools that solve real-world problems.
               </p>
               
               <p>
                 My work emphasizes <span className="text-white font-medium">performance, clarity, and reliability</span>. 
-I enjoy solving non-trivial problems — optimizing inference workflows, managing model loading strategies, 
-designing AI-powered tools for practical use, and building developer-friendly systems that are easy to extend and maintain.
+I enjoy solving non-trivial problems — architecting CLI workflows, integrating multiple APIs and tools, 
+designing AI-powered systems for practical use, and building developer-friendly software that's easy to extend and maintain.
               </p>
               
               <p>

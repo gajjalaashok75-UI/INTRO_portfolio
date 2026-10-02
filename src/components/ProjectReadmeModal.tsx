@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { X, Github, Loader2, FileQuestion, RotateCw } from 'lucide-react';
 import { rehypeResolveRepoUrls } from '../lib/rehypeRepoUrls';
+import { rehypeGithubSlugs } from '../lib/rehypeGithubSlugs';
 
 export interface ReadmeTarget {
   title: string;
@@ -13,6 +14,10 @@ export interface ReadmeTarget {
 }
 
 const README_FILENAMES = ['README.md', 'README.MD', 'README', 'readme.md', 'Readme.md'];
+
+function headingId(node: unknown): string | undefined {
+  return (node as { properties?: { id?: string } } | undefined)?.properties?.id;
+}
 
 /**
  * Pulls the README straight from GitHub's raw CDN. CORS is allowed there, so
@@ -44,6 +49,35 @@ export default function ProjectReadmeModal({
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  /**
+   * Table-of-contents links inside a README point at `#some-heading`. Left
+   * alone the browser would jump the whole document — which reads as the page
+   * shooting to the top — because the anchor lives inside a scroll container,
+   * not the document. Scroll the modal body instead, and swallow the click
+   * when no such heading exists.
+   */
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const href = e.currentTarget.getAttribute('href') ?? '';
+    const isAnchor = href === '' || href === '#' || href.startsWith('#');
+    if (!isAnchor) return;
+
+    e.preventDefault();
+
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const id = href.startsWith('#') ? decodeURIComponent(href.slice(1)) : '';
+    if (!id || id === 'top') {
+      container.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const target = container.querySelector(`#${CSS.escape(id)}`);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const load = useCallback(async () => {
     if (!target) return;
@@ -178,27 +212,38 @@ export default function ProjectReadmeModal({
                       // rewritten inside them.
                       rehypeRaw,
                       [rehypeResolveRepoUrls, { repo: target.repo }],
+                      rehypeGithubSlugs,
                     ]}
                     components={{
-                      h1: ({ children }) => (
-                        <h1 className="text-2xl md:text-3xl font-bold text-white mt-2 mb-4">{children}</h1>
+                      h1: ({ children, node }) => (
+                        <h1 id={headingId(node)} className="text-2xl md:text-3xl font-bold text-white mt-2 mb-4 scroll-mt-2">
+                          {children}
+                        </h1>
                       ),
-                      h2: ({ children }) => (
-                        <h2 className="text-xl md:text-2xl font-bold text-white mt-8 mb-3 pb-2 border-b border-dark-border">
+                      h2: ({ children, node }) => (
+                        <h2
+                          id={headingId(node)}
+                          className="text-xl md:text-2xl font-bold text-white mt-8 mb-3 pb-2 border-b border-dark-border scroll-mt-2"
+                        >
                           {children}
                         </h2>
                       ),
-                      h3: ({ children }) => (
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">{children}</h3>
+                      h3: ({ children, node }) => (
+                        <h3 id={headingId(node)} className="text-lg font-semibold text-white mt-6 mb-2 scroll-mt-2">
+                          {children}
+                        </h3>
                       ),
-                      h4: ({ children }) => (
-                        <h4 className="text-base font-semibold text-white mt-5 mb-2">{children}</h4>
+                      h4: ({ children, node }) => (
+                        <h4 id={headingId(node)} className="text-base font-semibold text-white mt-5 mb-2 scroll-mt-2">
+                          {children}
+                        </h4>
                       ),
                       a: ({ children, href }) => (
                         <a
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={handleAnchorClick}
                           className="text-primary hover:underline underline-offset-2 break-words"
                         >
                           {children}

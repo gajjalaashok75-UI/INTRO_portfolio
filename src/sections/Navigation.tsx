@@ -35,7 +35,7 @@ export default function Navigation() {
     const root = navRootRef.current;
     if (!root) return;
     navScopeRef.current = createScope({ root }).add((self) => {
-      self.add('pingLogo', () => {
+      self?.add('pingLogo', () => {
         animate('.gakr-logo', {
           rotate: [0, -6, 6, 0],
           scale: [1, 1.08, 1],

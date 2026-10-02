@@ -40,7 +40,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
     if (!root) return;
 
     scopeRef.current = createScope({ root }).add((self) => {
-      self.add('play', () => {
+      self?.add('play', () => {
         animate(targets, {
           opacity: [0, 1],
           translateY: [translateY, 0],

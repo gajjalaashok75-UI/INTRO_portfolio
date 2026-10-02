@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { animate, createAnimatable, createScope, splitText, stagger } from 'animejs';
 import { ArrowRight, MapPin, Github, Linkedin, Cpu, Server, Zap } from 'lucide-react';
 
@@ -220,6 +221,19 @@ export default function Hero() {
             >
               View Projects
             </motion.button>
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Link
+                to="/resume"
+                className="group flex items-center gap-2 px-8 py-4 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-all duration-300 shadow-glow hover:shadow-glow-lg"
+              >
+                View Resume
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
           </motion.div>
 
           {/* Social Links */}

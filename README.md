@@ -166,29 +166,28 @@ Replace images in the `public/` directory:
 
 ## 🌐 Deployment
 
-### GitHub Pages
-1. **Build the project**
-   ```bash
-   npm run build
-   ```
+### Netlify (Recommended)
+1. **Connect repository** to Netlify
+2. **Build settings**:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+3. **Deploy** automatically on push
 
-2. **Deploy to GitHub Pages**
-   - Push to `main` branch
-   - Enable GitHub Pages in repository settings
-   - Set source to `/ (root)` or configure with GitHub Actions
+`public/_redirects` contains `/*    /index.html   200`, which provides the SPA
+fallback so client-side routes such as `/resume` survive direct navigation and
+browser refresh. Existing static files (e.g. `/resume.pdf`, `/assets/*`) are
+still served normally.
 
-### Vercel (Recommended)
+### Vercel
 1. **Connect repository** to Vercel
 2. **Configure build settings**:
    - Build Command: `npm run build`
    - Output Directory: `dist`
 3. **Deploy** automatically on push
 
-### Netlify
-1. **Connect repository** to Netlify
-2. **Build settings**:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
+### GitHub Pages
+Not supported with the current root deployment config (`base: '/'` and
+client-side routing). Serve `dist/` from a root domain instead.
 
 ## 📊 Performance
 

@@ -106,14 +106,14 @@ export default function LiveClock() {
     const root = rootRef.current;
     if (!root) return;
     scopeRef.current = createScope({ root }).add((self) => {
-      self.add('pulse', () => {
+      self?.add('pulse', () => {
         animate('.gakr-clock-seconds', {
           scale: [1, 1.18, 1],
           duration: 380,
           ease: 'out(3)',
         });
       });
-      self.add('shine', () => {
+      self?.add('shine', () => {
         animate('.gakr-clock-shine', {
           left: ['-40%', '140%'],
           duration: 750,

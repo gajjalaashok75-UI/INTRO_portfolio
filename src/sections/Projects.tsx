@@ -1,7 +1,12 @@
 import { motion, useInView } from 'framer-motion';
-import { useEffect, useRef, type ReactNode } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState, type ReactNode } from 'react';
 import { createAnimatable } from 'animejs';
-import { ExternalLink, Github, ArrowUpRight, Bot, Sparkles, Terminal, SearchCode, Package } from 'lucide-react';
+import { ExternalLink, Github, ArrowUpRight, Bot, Sparkles, Terminal, SearchCode, Package, BookOpen, Loader2 } from 'lucide-react';
+import type { ReadmeTarget } from '../components/ProjectReadmeModal';
+
+// Markdown rendering is ~170 kB of the bundle and is only needed once someone
+// actually opens a README, so it is split into its own chunk on demand.
+const ProjectReadmeModal = lazy(() => import('../components/ProjectReadmeModal'));
 
 const projects = [
   {
@@ -15,8 +20,8 @@ const projects = [
       registry: 'https://www.npmjs.com/package/@gakr-gakr/gakrcli',
     },
     icon: Terminal,
-    featured: true,
     badge: 'Featured Project',
+    repo: 'gajjalaashok75-UI/GakrCLI',
   },
   {
     title: 'scout-it',
@@ -29,8 +34,8 @@ const projects = [
       registry: 'https://pypi.org/project/scout-it/',
     },
     icon: SearchCode,
-    featured: true,
     badge: 'Open Source',
+    repo: 'gajjalaashok75-UI/scout-it',
   },
   {
     title: 'GAKR AI Chatbot',
@@ -42,7 +47,6 @@ const projects = [
       source: 'https://github.com/gajjalaashok75-UI',
     },
     icon: Bot,
-    featured: false,
     badge: null,
   },
   {
@@ -55,7 +59,6 @@ const projects = [
       source: 'https://github.com/gajjalaashok75-UI',
     },
     icon: null,
-    featured: false,
     badge: null,
   },
   {
@@ -68,7 +71,6 @@ const projects = [
       source: 'https://github.com/gajjalaashok75-UI',
     },
     icon: null,
-    featured: false,
     badge: null,
   },
   {
@@ -80,7 +82,6 @@ const projects = [
       source: 'https://github.com/gajjalaashok75-UI',
     },
     icon: null,
-    featured: false,
     badge: null,
   },
 ];
@@ -160,6 +161,7 @@ function TiltSurface({ children, className = '' }: { children: ReactNode; classN
 export default function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [readmeTarget, setReadmeTarget] = useState<ReadmeTarget | null>(null);
 
   return (
     <section id="projects" className="relative py-24 md:py-32 bg-dark">
@@ -192,11 +194,9 @@ export default function Projects() {
             <motion.div
               key={project.title}
               variants={itemVariants}
-              className={`group relative rounded-2xl ${
-                project.featured ? 'lg:col-span-2' : ''
-              }`}
+              className="group relative h-full"
             >
-              <TiltSurface className="relative rounded-2xl overflow-hidden bg-dark-card border border-dark-border group-hover:border-primary transition-colors duration-300">
+              <TiltSurface className="relative h-full rounded-2xl overflow-hidden bg-dark-card border border-dark-border group-hover:border-primary transition-colors duration-300 flex flex-col">
                 {/* Badge */}
                 {project.badge && (
                   <div className="absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white text-sm font-medium">
@@ -206,7 +206,7 @@ export default function Projects() {
                 )}
 
                 {/* Image */}
-                <div className={`relative overflow-hidden ${project.featured ? 'h-64 md:h-80' : 'h-48'}`}>
+                <div className="relative overflow-hidden h-56 shrink-0">
                   <img
                     src={project.image}
                     alt={project.title}
@@ -217,7 +217,7 @@ export default function Projects() {
                 </div>
 
                 {/* Content */}
-                <div className="relative p-6 md:p-8">
+                <div className="relative p-6 flex flex-col flex-1">
                   <div className="flex items-start justify-between mb-4 gap-3">
                     <div className="flex items-center gap-3 min-w-0">
                       {project.icon && (
@@ -228,6 +228,24 @@ export default function Projects() {
                       </h3>
                     </div>
                     <div className="flex gap-2 shrink-0">
+                      {project.repo && (
+                        <motion.button
+                          onClick={() =>
+                            setReadmeTarget({
+                              title: project.title,
+                              repo: project.repo,
+                              repoUrl: project.links.source,
+                            })
+                          }
+                          className="p-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-glow hover:shadow-glow-lg"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          aria-label={`Read README of ${project.title}`}
+                          title="View README"
+                        >
+                          <BookOpen size={18} />
+                        </motion.button>
+                      )}
                       {project.links.source && (
                         <motion.a
                           href={project.links.source}
@@ -275,7 +293,7 @@ export default function Projects() {
                   </p>
 
                   {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mt-auto">
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
@@ -314,6 +332,19 @@ export default function Projects() {
           </motion.a>
         </motion.div>
       </div>
+
+      {/* README Viewer */}
+      {readmeTarget && (
+        <Suspense
+          fallback={
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-md">
+              <Loader2 size={28} className="animate-spin text-primary" />
+            </div>
+          }
+        >
+          <ProjectReadmeModal target={readmeTarget} onClose={() => setReadmeTarget(null)} />
+        </Suspense>
+      )}
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, Children, type ReactNode, type ReactElement } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -6,6 +6,7 @@ import rehypeRaw from 'rehype-raw';
 import { X, Github, Loader2, FileQuestion, RotateCw } from 'lucide-react';
 import { rehypeResolveRepoUrls } from '../lib/rehypeRepoUrls';
 import { rehypeGithubSlugs } from '../lib/rehypeGithubSlugs';
+import Mermaid from './Mermaid';
 
 export interface ReadmeTarget {
   title: string;
@@ -273,11 +274,27 @@ export default function ProjectReadmeModal({
                           </code>
                         );
                       },
-                      pre: ({ children }) => (
-                        <pre className="bg-black/40 rounded-xl overflow-x-auto my-4 border border-dark-border">
-                          {children}
-                        </pre>
-                      ),
+                      pre: ({ children }) => {
+                        // ```mermaid fences arrive here as a <pre> wrapping the
+                        // <code> built above. Swap the pair for a real diagram
+                        // instead of printing the source.
+                        const child = Children.only(children) as ReactElement<{
+                          className?: string;
+                          children?: ReactNode;
+                        }> | null;
+                        if (
+                          typeof child?.props?.className === 'string' &&
+                          child.props.className.includes('language-mermaid') &&
+                          typeof child.props.children === 'string'
+                        ) {
+                          return <Mermaid code={child.props.children} />;
+                        }
+                        return (
+                          <pre className="bg-black/40 rounded-xl overflow-x-auto my-4 border border-dark-border">
+                            {children}
+                          </pre>
+                        );
+                      },
                       table: ({ children }) => (
                         <div className="overflow-x-auto my-4">
                           <table className="w-full border-collapse text-sm">{children}</table>

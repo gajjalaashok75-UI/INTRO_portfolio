@@ -1,24 +1,45 @@
 [
   {
-    "title": "Quantum Fundamentals",
-    "issuer": "Amaravati Quantum Valley · Qubitech · WISER",
-    "date": "2025 – 2026",
-    "image": "/certificates/quantum-fundamentals.jpg",
-    "priority": true
-  },
-  {
     "title": "Devit Internship",
     "issuer": "Devit",
     "date": "May – Jun 2026",
     "image": "/certificates/devit-internship.jpg",
-    "priority": false
+    "priority": true
   },
   {
     "title": "Devit Offer Letter",
     "issuer": "Devit",
     "date": "May – Jun 2026",
     "image": "/certificates/devit-offer-letter.jpg",
-    "priority": false
+    "priority": true
+  },
+  {
+    "title": "Internpe Completion Certificate",
+    "issuer": "InternPe",
+    "date": "May – Jun 2026",
+    "image": "/certificates/internpe-completion-certificate.png",
+    "priority": true
+  },
+  {
+    "title": "Internpe Offer Letter",
+    "issuer": "InternPe",
+    "date": "May – Jun 2026",
+    "image": "/certificates/internpe-offer-letter.png",
+    "priority": true
+  },
+  {
+    "title": "Nptel Entrepreneurship",
+    "issuer": "IIT Madras · Skill India",
+    "date": "Jul – Oct 2025",
+    "image": "/certificates/nptel-entrepreneurship.jpg",
+    "priority": true
+  },
+  {
+    "title": "Outsyslayer Hackathon",
+    "issuer": "ByondCampuz · GPREC",
+    "date": "2026",
+    "image": "/certificates/outsyslayer-hackathon.jpg",
+    "priority": true
   },
   {
     "title": "Infosys Basics Of Python",
@@ -39,20 +60,6 @@
     "issuer": "Infosys Springboard",
     "date": "",
     "image": "/certificates/infosys-nlp.jpg",
-    "priority": false
-  },
-  {
-    "title": "Internpe Completion Certificate",
-    "issuer": "InternPe",
-    "date": "May – Jun 2026",
-    "image": "/certificates/internpe-completion-certificate.png",
-    "priority": false
-  },
-  {
-    "title": "Internpe Offer Letter",
-    "issuer": "InternPe",
-    "date": "May – Jun 2026",
-    "image": "/certificates/internpe-offer-letter.png",
     "priority": false
   },
   {
@@ -77,17 +84,10 @@
     "priority": false
   },
   {
-    "title": "Nptel Entrepreneurship",
-    "issuer": "IIT Madras · Skill India",
-    "date": "Jul – Oct 2025",
-    "image": "/certificates/nptel-entrepreneurship.jpg",
-    "priority": false
-  },
-  {
-    "title": "Outsyslayer Hackathon",
-    "issuer": "ByondCampuz · GPREC",
-    "date": "2026",
-    "image": "/certificates/outsyslayer-hackathon.jpg",
+    "title": "Quantum Fundamentals",
+    "issuer": "Amaravati Quantum Valley · Qubitech · WISER",
+    "date": "2025 – 2026",
+    "image": "/certificates/quantum-fundamentals.jpg",
     "priority": false
   },
   {

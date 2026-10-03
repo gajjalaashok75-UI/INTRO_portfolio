@@ -45,11 +45,13 @@ function parseCertificate(filename, priority = false) {
     date = '2026';
   }
 
+  const imagePath = priority ? `/certificates/prior/${filename}` : `/certificates/${filename}`;
+
   return {
     title: name,
     issuer,
     date,
-    image: `/certificates/${filename}`,
+    image: imagePath,
     priority,
   };
 }

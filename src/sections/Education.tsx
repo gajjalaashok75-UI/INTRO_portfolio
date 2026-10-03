@@ -8,7 +8,7 @@ const educationData = [
     degree: 'B.Tech in Computer Science (Data Science)',
     institution: 'G. Pulla Reddy Engineering College, Kurnool',
     duration: '2023 — 2027',
-    details: 'CGPA: 7.5/10 | Focus: AI/ML, Data Science, Full-Stack Development',
+    details: 'CGPA: 7.8/10 | Focus: AI/ML, Data Science, Full-Stack Development',
     icon: GraduationCap,
     highlight: 'Pursuing',
   },

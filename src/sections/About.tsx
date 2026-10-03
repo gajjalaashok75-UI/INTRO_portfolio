@@ -42,7 +42,7 @@ function Counter({ end, suffix = '', duration = 2000 }: CounterProps) {
 
 const stats = [
   { icon: Code2, value: 15, suffix: '+', label: 'Projects Built' },
-  { icon: Award, value: 7.5, suffix: '', label: 'CGPA' },
+  { icon: Award, value: 7.8, suffix: '', label: 'CGPA' },
   { icon: BookOpen, value: 5, suffix: '+', label: 'Technologies' },
   { icon: Trophy, value: 100, suffix: '%', label: 'Commitment' },
 ];
@@ -150,7 +150,7 @@ designing AI-powered systems for practical use, and building developer-friendly 
 
               <p>
                 Currently pursuing B.Tech in Computer Science (Data Science) at G. Pulla Reddy Engineering College, 
-                Kurnool with a <span className="text-white font-medium">7.5 CGPA</span>. My academic journey started with 
+                Kurnool with a <span className="text-white font-medium">7.8 CGPA</span>. My academic journey started with 
                 a perfect <span className="text-white font-medium">10/10 GPA</span> in 10th grade and <span className="text-white font-medium">948/1000</span> in Intermediate.
               </p>
             </motion.div>

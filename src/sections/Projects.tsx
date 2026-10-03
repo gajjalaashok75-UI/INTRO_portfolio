@@ -43,7 +43,7 @@ const projects = [
     image: '/project-ai.jpg',
     tech: ['FastAPI', 'Python', 'LLM', 'Streaming', 'GGUF', 'llama.cpp'],
     links: {
-      demo: 'https://ashok75-gakr.hf.space',
+      demo: 'https://gakrbot.netlify.app/',
       source: 'https://github.com/gajjalaashok75-UI',
     },
     icon: Bot,
@@ -54,7 +54,7 @@ const projects = [
     description: 'Machine learning models and AI applications deployed on Hugging Face Spaces. Exploring Qwen and DeepSeek variants alongside custom fine-tuned models with optimized inference pipelines.',
     image: '/project-data.jpg',
     tech: ['Python', 'Hugging Face', 'Qwen', 'DeepSeek', 'TensorFlow'],
-    links: {
+links: {
       demo: 'https://huggingface.co/Ashok75',
       source: 'https://github.com/gajjalaashok75-UI',
     },

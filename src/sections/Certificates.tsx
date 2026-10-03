@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { animate, createScope } from 'animejs';
-import { Award, ChevronLeft, ChevronRight, X, Maximize2, LayoutGrid } from 'lucide-react';
+import { Award, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
+import certificatesData from '../data/certificates.json';
 
 type Scope = ReturnType<typeof createScope>;
 
@@ -10,102 +11,11 @@ interface Certificate {
   issuer: string;
   date: string;
   image: string;
+  priority?: boolean;
 }
 
-const certificates: Certificate[] = [
-  {
-    title: 'Basics of Python',
-    issuer: 'Infosys Springboard',
-    date: 'Jul 2025',
-    image: '/certificates/infosys-basics-of-python.jpg',
-  },
-  {
-    title: 'Introduction to Data Science',
-    issuer: 'Infosys Springboard',
-    date: 'Mar 2026',
-    image: '/certificates/infosys-data-science.jpg',
-  },
-  {
-    title: 'Introduction to Natural Language Processing',
-    issuer: 'Infosys Springboard',
-    date: 'Mar 2026',
-    image: '/certificates/infosys-nlp.jpg',
-  },
-  {
-    title: 'Quantum Fundamentals Program',
-    issuer: 'Amaravati Quantum Valley · Qubitech · WISER',
-    date: '2025 – 2026',
-    image: '/certificates/quantum-fundamentals.jpg',
-  },
-  {
-    title: 'Real-Time Internship Program — Offer Letter',
-    issuer: 'Devit',
-    date: 'May – Jun 2026',
-    image: '/certificates/devit-offer-letter.jpg',
-  },
-  {
-    title: 'Real-Time Internship Program',
-    issuer: 'Devit',
-    date: 'May – Jun 2026',
-    image: '/certificates/devit-internship.jpg',
-  },
-  {
-    title: 'AI/ML Internship Offer Letter',
-    issuer: 'InternPe',
-    date: 'May – Jun 2026',
-    image: '/certificates/internpe-offer-letter.png',
-  },
-  {
-    title: 'AI/ML Internship Completion Certificate',
-    issuer: 'InternPe',
-    date: 'May – Jun 2026',
-    image: '/certificates/internpe-completion-certificate.png',
-  },
-  {
-    title: 'NPTEL — Entrepreneurship',
-    issuer: 'IIT Madras · Skill India',
-    date: 'Jul – Oct 2025',
-    image: '/certificates/nptel-entrepreneurship.jpg',
-  },
-  {
-    title: 'Intro to Machine Learning',
-    issuer: 'Kaggle',
-    date: 'Mar 2026',
-    image: '/certificates/kaggle-intro-ml.jpg',
-  },
-  {
-    title: 'Intro to AI Ethics',
-    issuer: 'Kaggle',
-    date: 'Mar 2026',
-    image: '/certificates/kaggle-ai-ethics.jpg',
-  },
-  {
-    title: 'Python Coder Badge',
-    issuer: 'Kaggle',
-    date: '2024',
-    image: '/certificates/kaggle-python-coder.jpg',
-  },
-  {
-    title: 'Java Training',
-    issuer: 'Spoken Tutorial · IIT Bombay',
-    date: 'Nov 2024',
-    image: '/certificates/spoken-tutorial-java.jpg',
-  },
-  {
-    title: 'Python 3.4.3 Training',
-    issuer: 'Spoken Tutorial · IIT Bombay',
-    date: 'Mar 2025',
-    image: '/certificates/spoken-tutorial-python.jpg',
-  },
-  {
-    title: 'OutSysLayer Hackathon — Participation',
-    issuer: 'ByondCampuz · GPREC',
-    date: '2026',
-    image: '/certificates/outsyslayer-hackathon.jpg',
-  },
-];
+const certificates: Certificate[] = certificatesData;
 
-const VISIBLE_COUNT = 6;
 const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const containerVariants = {
@@ -133,11 +43,11 @@ const cardVariants = {
  */
 function CertCard({
   cert,
-  dimmed,
+  dimmed = false,
   onOpen,
 }: {
   cert: Certificate;
-  dimmed: boolean;
+  dimmed?: boolean;
   onOpen: () => void;
 }) {
   const shineRef = useRef<HTMLSpanElement | null>(null);
@@ -192,7 +102,6 @@ export default function Certificates() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
-  const [showAll, setShowAll] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [closing, setClosing] = useState(false);
   const lightboxScopeRef = useRef<Scope | null>(null);
@@ -246,8 +155,6 @@ export default function Certificates() {
     };
   }, [activeIndex, closeLightbox, step]);
 
-  const handleShowAll = () => setShowAll(true);
-
   const active = activeIndex !== null ? certificates[activeIndex] : null;
 
   return (
@@ -270,39 +177,22 @@ export default function Certificates() {
         </motion.div>
 
         {/* Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="cert-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
-        >
-          {certificates.map((cert, index) => (
-            <CertCard
-              key={cert.title}
-              cert={cert}
-              dimmed={!showAll && index >= VISIBLE_COUNT}
-              onOpen={() => openLightbox(index)}
-            />
-          ))}
-        </motion.div>
-
-        {/* Show all toggle */}
-        {!showAll && certificates.length > VISIBLE_COUNT && (
+        <div className="overflow-y-auto max-h-[680px] pr-2 scrollbar-thin scrollbar-thumb-dark-border scrollbar-track-transparent">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.5 }}
-            className="text-center mt-10"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? 'visible' : 'hidden'}
+            className="cert-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 pb-4"
           >
-            <button
-              onClick={handleShowAll}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 text-white hover:bg-white/10 border border-dark-border hover:border-primary transition-all duration-300"
-            >
-              <LayoutGrid size={18} />
-              Show all {certificates.length} certificates
-            </button>
+            {certificates.map((cert, index) => (
+              <CertCard
+                key={cert.title}
+                cert={cert}
+                onOpen={() => openLightbox(index)}
+              />
+            ))}
           </motion.div>
-        )}
+        </div>
 
         {/* Summary badge */}
         <motion.div

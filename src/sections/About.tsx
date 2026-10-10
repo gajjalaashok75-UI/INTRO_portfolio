@@ -132,15 +132,15 @@ export default function About() {
 
             <motion.div variants={itemVariants} className="space-y-5 text-muted-foreground leading-relaxed">
               <p className="text-white/90 text-lg">
-                I have hands-on experience building practical AI tools and full-stack applications, from terminal-based coding agents to web search and automation systems.
+                I'm a Computer Science and Engineering (Data Science) student with hands-on experience building practical AI tools and full-stack applications, from terminal-based coding agents to web search and automation systems.
                 I design robust backends and clean, responsive frontends for intelligent, developer-friendly systems. My work focuses on performance, 
                 reliability, and creating tools that solve real-world problems.
               </p>
               
               <p>
                 My work emphasizes <span className="text-white font-medium">performance, clarity, and reliability</span>. 
-I enjoy solving non-trivial problems — architecting CLI workflows, integrating multiple APIs and tools, 
-designing AI-powered systems for practical use, and building developer-friendly software that's easy to extend and maintain.
+I enjoy tackling challenging technical problems, integrating different models and tools, designing reliable application workflows, and
+ building software that is easy to extend and maintain. My primary interests include AI-powered applications, AI agent development, and software engineering.
               </p>
               
               <p>

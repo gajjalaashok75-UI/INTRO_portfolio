@@ -186,7 +186,7 @@ export default function Hero() {
             variants={itemVariants}
             className="text-xl sm:text-2xl md:text-3xl text-secondary font-medium mb-6"
           >
-            AI Engineer & Full-Stack Developer
+            Computer Science Student | AI & Software Development
           </motion.p>
 
           {/* Description */}

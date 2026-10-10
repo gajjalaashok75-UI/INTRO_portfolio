@@ -8,35 +8,85 @@ import {
   Terminal, 
   Layers,
   GitBranch,
-  Box
+  Box,
+  Wrench
 } from 'lucide-react';
+
 
 const skillCategories = [
   {
     title: 'Programming Languages',
     icon: Code2,
-    skills: ['Python', 'TypeScript', 'Java', 'HTML/CSS', 'JavaScript', 'SQL', 'Bash', 'C'],
+    skills: [
+      'Python',
+      'TypeScript',
+      'JavaScript',
+      'Java',
+      'C',
+      'SQL',
+      'Bash',
+    ],
     color: 'from-blue-500/20 to-cyan-500/20',
   },
   {
     title: 'AI & Data Science',
     icon: Cpu,
-    skills: ['Machine Learning', 'Data Analysis (NumPy, Pandas)', 'Model Integration & Inference', 'Hugging Face Transformers', 'AI Agent / CLI Tooling', 'MCP Integration'],
+    skills: [
+      'Machine Learning',
+      'Data Analysis (NumPy, Pandas)',
+      'Model Integration & Inference',
+      'Hugging Face Transformers',
+      'AI Agent Development',
+      'MCP Integration',
+    ],
     color: 'from-purple-500/20 to-pink-500/20',
-  },
-  {
-    title: 'Tools & Platforms',
-    icon: Terminal,
-    skills: ['Git & GitHub', 'VS Code', 'Jupyter Notebook', 'Docker (Basic)', 'Hugging Face Hub', 'Kaggle', 'Google Colab', 'Node.js / Bun'],
-    color: 'from-orange-500/20 to-red-500/20',
   },
   {
     title: 'Web Development',
     icon: Globe,
-    skills: ['Frontend (HTML, CSS, JavaScript)', 'Responsive Design', 'REST APIs Integration', 'Flask', 'FastAPI', 'React', 'Web Scraping & Automation'],
+    skills: [
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'Responsive Design',
+      'React',
+      'Node.js',
+      'Bun',
+      'Flask',
+      'FastAPI',
+      'REST API Integration',
+      'Web Scraping & Automation',
+    ],
     color: 'from-green-500/20 to-emerald-500/20',
   },
+  {
+    title: 'Tools & Platforms',
+    icon: Terminal,
+    skills: [
+      'Git & GitHub',
+      'VS Code',
+      'Jupyter Notebook',
+      'Docker (Basic)',
+      'Hugging Face Hub',
+      'Kaggle',
+      'Google Colab',
+    ],
+    color: 'from-orange-500/20 to-red-500/20',
+  },
+  {
+    title: 'Software Engineering',
+    icon: Wrench,
+    skills: [
+      'Problem-Solving',
+      'Debugging',
+      'Software Testing',
+      'API Testing',
+      'Code Optimization',
+    ],
+    color: 'from-yellow-500/20 to-amber-500/20',
+  },
 ];
+  
 
 const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
